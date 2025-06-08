@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bloc de Notas</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/script.js" defer></script>
+</head>
+<body>
+    {% if usuario %}
+        <div class="topbar">
+            <span>Bienvenido, {{ usuario.nombre }}</span>
+            <a href="/logout" class="logout-btn">Cerrar sesión</a>
+        </div>
+
+        <div class="form-crear-bloc">
+            <input type="text" id="nombreBloc" placeholder="Nombre del nuevo bloc">
+            <label><input type="checkbox" id="privadoBloc"> Privado</label>
+            <button onclick="crearBloc()">Crear Bloc</button>
+        </div>
+
+        <div id="blocs">
+            {% for bloc in blocs %}
+            <div class="bloc" id="bloc-{{ bloc.id }}">
+                <h2>{{ bloc.nombre }} {% if bloc.privado %}(Privado){% endif %}</h2>
+                <ul>
+                    {% for nota in bloc.notas %}
+                    <li id="nota-{{ nota.id }}">
+                        <span class="texto-nota">{{ nota.texto }}</span>
+                        <small>- {{ nota.autor.nombre }}</small>
+                        {% if nota.editado %}
+                            <small class="editado">(editado)</small>
+                        {% endif %}
+                        {% if usuario %}
+                            {% if nota.autor.id == usuario.id %}
+                                <button onclick="mostrarEdicion({{ nota.id }})" class="btn-editar">Editar</button>
+                            {% endif %}
+                            {% if nota.autor.id == usuario.id or bloc.creador.id == usuario.id %}
+                                <button onclick="eliminarNota({{ nota.id }})" class="btn-eliminar">Eliminar</button>
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% if usuario %}
+                    {% if not bloc.privado or bloc.creador.id == usuario.id %}
+                        <input type="text" id="nuevaNota-{{ bloc.id }}" placeholder="Nueva nota">
+                        <button onclick="agregarNota({{ bloc.id }})">Agregar Nota</button>
+                    {% endif %}
+                    {% if bloc.creador.id == usuario.id %}
+                        <button onclick="borrarBloc({{ bloc.id }})" class="btn-borrar">Eliminar Bloc</button>
+                    {% endif %}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="login-container">
+            <h2>Iniciar sesión</h2>
+            <form method="post" action="/login" class="login-form">
+                <input type="text" name="nombre" placeholder="Tu nombre" required>
+                <button type="submit">Ingresar</button>
+            </form>
+        </div>
+    {% endif %}
+</body>
+</html>
