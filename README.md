@@ -37,11 +37,11 @@ Este proyecto es una aplicación web de un **Bloc de Notas Comunitario**, desarr
 
 ## ⚙️ Cómo ejecutar el proyecto
 
-### 1. Clonar o descargar el proyecto
+### 1. Descargar el proyecto
 
 ```bash
 git clone https://github.com/enzolarrea/tp-peewee.git
-cd TP-Peewee-
+cd tp-peewee
 ```
 
 > O descargá el archivo ZIP desde GitHub y descomprimilo.
