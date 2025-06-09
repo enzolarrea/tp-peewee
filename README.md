@@ -14,7 +14,7 @@ Este proyecto es una aplicación web de un **Bloc de Notas Comunitario**, desarr
 
 ## 🛠️ Tecnologías utilizadas
 
-- **Python**
+- **Python 3**
 - **Flask** (framework web)
 - **Peewee** (ORM para SQLite)
 - **SQLite** (base de datos liviana)
@@ -50,6 +50,8 @@ cd tp-peewee
 
 ```bash
 python -m venv venv
+Si da error instalar:
+apt install python3.(version)-venv
 # En Windows:
 venv\Scripts\activate
 # En Linux/macOS:
